@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solah Tracker for Kids</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container-fluid px-5">
+            <span class="navbar-brand fw-bold fs-2" style="color: #165621; font-weight: bold;">
+                Solah Tracker for Kids
+            </span>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li><a href="index.html">Homepage</a></li>
+                    <li><a href="prayerzone.html">Prayer Zone</a></li>
+                    <li><a href="readchildinfo.html">View Info</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+<body>
+  <div class="mainWrapper">
+    <h3>Saved Records</h3>
+
+    <label>Select Child:</label>
+    <select id="childDropdown"></select>
+    <button onclick="showChildInfo()">Show Information</button>
+
+    <div id="childInfo">
+      <h3>Child Details</h3>
+      <p id="childName"></p>
+      <p id="childAge"></p>
+      <p id="dateSaved"></p>
+
+      <h3>Daily Prayer Tracking</h3>
+      <ul id="prayerList"></ul>
+
+      <button id="btnDeleteChild">Delete This Record</button>
+    </div>
+
+  </div>
+
+  <script>
+    const fs = require('fs');
+    const path = require('path');
+    const dataFile = path.join(__dirname, 'data.txt');
+
+    function loadDropdown() {
+      const dropdown = document.getElementById("childDropdown");
+      dropdown.innerHTML = "";
+
+      if (fs.existsSync(dataFile)) {
+        let records = JSON.parse(fs.readFileSync(dataFile));
+        
+        records.forEach((record, index) => {
+          let option = document.createElement("option");
+          option.value = index;
+          option.textContent = record.name;
+          dropdown.appendChild(option);
+        });
+      } else {
+        dropdown.innerHTML = "<option>No records found</option>";
+      }
+    }
+
+    function showChildInfo() {
+      const index = document.getElementById("childDropdown").value;
+      if (index === "") return;
+
+      const records = JSON.parse(fs.readFileSync(dataFile));
+      const child = records[index];
+
+      document.getElementById("childInfo").style.display = "block";
+      document.getElementById("childName").textContent = `Name: ${child.name}`;
+      document.getElementById("childAge").textContent = `Age: ${child.age}`;
+      document.getElementById("dateSaved").textContent = `Saved on: ${child.dateSaved}`;
+
+      const prayerList = document.getElementById("prayerList");
+      prayerList.innerHTML = `
+        <li>Subuh: ${child.prayers.subuh ? '✔' : '✘'}</li>
+        <li>Zohor: ${child.prayers.zohor ? '✔' : '✘'}</li>
+        <li>Asar: ${child.prayers.asar ? '✔' : '✘'}</li>
+        <li>Maghrib: ${child.prayers.maghrib ? '✔' : '✘'}</li>
+        <li>Isyak: ${child.prayers.isyak ? '✔' : '✘'}</li>
+        <li><strong>Sunnah Prayers:</strong> ${child.sunnahPrayers || "None"}</li>
+      `;
+      document.getElementById("btnDeleteChild").onclick = function() {
+        deleteChild(index);
+    };
+    }
+
+    function deleteChild(index) {
+      let records = JSON.parse(fs.readFileSync(dataFile));
+
+      if (confirm(`Are you sure you want to delete ${records[index].name}'s record?`)) {
+        records.splice(index, 1);
+        fs.writeFileSync(dataFile, JSON.stringify(records, null, 2));
+        alert("Record deleted successfully!");
+
+        document.getElementById("childInfo").style.display = "none";
+        loadDropdown();
+      }
+    }
+
+    function goBack() {
+      window.location.href = "index.html";
+    }
+    window.onload = loadDropdown;
+  </script>
+
+<footer>
+  <p>&copy; 2025 Solah Tracker | All Rights Reserved.</p>
+</footer>
+
+<script src="renderer.js"></script>
+
+</body>
+</html>

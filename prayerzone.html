@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solah Tracker for Kids</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container-fluid px-5">
+            <span class="navbar-brand fw-bold fs-2" style="color: #165621; font-weight: bold;">
+                Solah Tracker for Kids
+            </span>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li><a href="index.html">Homepage</a></li>
+                    <li><a href="prayerzone.html">Prayer Zone</a></li>
+                    <li><a href="readchildinfo.html">View Info</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Prayer Zone Section -->
+    <div class="container px-5">
+        <div class="box-container">
+            <h3>Select a Prayer Zone</h3>
+            <select id="solatZone">
+                <option value="">-- Select Zone --</option>
+                <option value="PRK01">Tapah, Slim River, Tanjung Malim</option>
+                <option value="PRK02">Kuala Kangsar, Sg. Siput, Ipoh, Batu Gajah, Kampar</option>
+                <option value="PRK03">Lenggong, Pengkalan Hulu, Grik</option>
+                <option value="PRK04">Temengor, Belum</option>
+                <option value="PRK05">Kg Gajah, Teluk Intan, Bagan Datuk, Seri Iskandar, Beruas, Parit, Lumut, Sitiawan, Pulau Pangkor</option>
+                <option value="PRK06">Selama, Taiping, Bagan Serai, Parit Buntar</option>
+                <option value="PRK07">Bukit Larut</option>
+            </select>
+            <label>Select Date:</label>
+            <input type="date" id="solatDate">
+            <button id="btnFetchSolat">Get Prayer Times</button>
+            <p id="hijriDate"></p>
+            <p id="currentDay"></p>
+            <ul id="solatList"></ul>
+        </div>
+    </div>
+
+    <!-- Child Information Section -->
+    <div class="container px-5">
+        <div class="box-container">
+            <h3>Enter Child's Information</h3>
+            <label>Child's Name:</label>
+            <input type="text" id="childName">
+            <label>Child's Age:</label>
+            <input type="number" id="childAge">
+            
+            <h4>Record Daily Prayers</h4>
+            <label><input type="checkbox" id="subuh"> Subuh</label><br>
+            <label><input type="checkbox" id="zohor"> Zohor</label><br>
+            <label><input type="checkbox" id="asar"> Asar</label><br>
+            <label><input type="checkbox" id="maghrib"> Maghrib</label><br>
+            <label><input type="checkbox" id="isyak"> Isyak</label><br>
+
+            <h4>Sunnah Prayers</h4>
+            <label id="sunnahPrayers">Sunnah Prayers:</label>
+            <input type="text" id="sunnahPrayers" placeholder="Enter Sunnah prayers">
+
+            <div class="button-group">
+                <button id="btnSaveChild">Save Data</button>
+                <button id="btnReadChild">Read Data</button>
+                <button id="btnDeleteChild">Delete Data</button>
+            </div>
+
+            <label for="editChildDropdown"><strong>Select a Child to Edit:</strong></label>
+            <select id="editChildDropdown">
+                <option disabled selected>Select a child</option>
+            </select>
+        </div>
+    </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Solah Tracker | All Rights Reserved.</p>
+    </footer>
+    <script src="renderer.js"></script>
+
+</body>
+</html>
